@@ -110,54 +110,112 @@
       <div class="page-header">
         <div>
           <h1 class="page-title">Upload Statements</h1>
-          <p class="page-sub">AI reads your files and extracts every transaction</p>
+          <p class="page-sub">Upload a file, paste text, or try the demo — AI does the rest</p>
         </div>
+      </div>
+
+      <!-- INPUT METHOD TABS -->
+      <div class="input-method-tabs">
+        <button class="method-tab active" onclick="switchMethod('file', this)">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload File
+        </button>
+        <button class="method-tab" onclick="switchMethod('paste', this)">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          Paste Text
+        </button>
       </div>
 
       <div class="upload-grid">
         <div class="upload-main">
-          <div class="dropzone" id="dropzone">
-            <div class="drop-icon">
-              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+
+          <!-- FILE UPLOAD PANEL -->
+          <div id="methodFile">
+            <div class="dropzone" id="dropzone">
+              <div class="drop-icon">
+                <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <h3 class="drop-title">Drop your statement here</h3>
+              <p class="drop-sub">PDF, CSV, XLSX — BMO, TD, CIBC, Scotiabank, RBC, Wise, PayPal</p>
+              <button class="btn-outline" onclick="document.getElementById('fileInput').click()">Choose file</button>
+              <input type="file" id="fileInput" accept=".csv,.pdf,.xlsx,.xls,.txt" multiple style="display:none" onchange="handleFiles(this.files)">
             </div>
-            <h3 class="drop-title">Drop your statement here</h3>
-            <p class="drop-sub">CSV, PDF, XLSX — credit card, debit, bank, or invoice</p>
-            <button class="btn-outline" onclick="document.getElementById('fileInput').click()">Choose file</button>
-            <input type="file" id="fileInput" accept=".csv,.pdf,.xlsx,.xls,.txt" multiple style="display:none" onchange="handleFiles(this.files)">
+            <div class="source-cards">
+              <div class="source-card" onclick="document.getElementById('fileInput').click()">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                <strong>Credit Card</strong>
+                <span>Any bank PDF or CSV</span>
+              </div>
+              <div class="source-card" onclick="document.getElementById('fileInput').click()">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+                <strong>Debit / Bank</strong>
+                <span>BMO, TD, CIBC etc.</span>
+              </div>
+              <div class="source-card" onclick="document.getElementById('fileInput').click()">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <strong>Invoice / PDF</strong>
+                <span>Subscription receipts</span>
+              </div>
+              <div class="source-card demo-card" onclick="loadDemo()">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <strong>Try Demo</strong>
+                <span>Load sample data</span>
+              </div>
+            </div>
           </div>
 
-          <div class="source-cards">
-            <div class="source-card" onclick="document.getElementById('fileInput').click()">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              <strong>Credit Card</strong>
-              <span>Statement export</span>
-            </div>
-            <div class="source-card" onclick="document.getElementById('fileInput').click()">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
-              <strong>Debit / Bank</strong>
-              <span>Account statement</span>
-            </div>
-            <div class="source-card" onclick="document.getElementById('fileInput').click()">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <strong>Invoice / PDF</strong>
-              <span>Subscription receipts</span>
-            </div>
-            <div class="source-card demo-card" onclick="loadDemo()">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              <strong>Try Demo</strong>
-              <span>Load sample data</span>
+          <!-- PASTE TEXT PANEL -->
+          <div id="methodPaste" style="display:none">
+            <div class="paste-panel">
+              <div class="paste-header">
+                <div>
+                  <h3 class="paste-title">Paste your statement text</h3>
+                  <p class="paste-sub">Open your PDF → Cmd+A → Cmd+C → paste here. Works with any bank statement.</p>
+                </div>
+              </div>
+              <div class="paste-source-row">
+                <label class="paste-source-label">Source label</label>
+                <input type="text" class="paste-source-input" id="pasteSource" placeholder="e.g. BMO April 2026, TD Credit Card…" value="BMO Statement">
+              </div>
+              <textarea class="paste-area" id="pasteArea" placeholder="Paste your bank statement text here…
+
+Example — just copy from your PDF:
+Mar 12  Pre-Authorized Payment, ROGERS PAC BPY/FAC   132.35
+Mar 13  Pre-Authorized Payment, WS INVESTMENTS        25.00
+Apr 01  INTERAC e-Transfer Received                  625.81
+Apr 09  Pre-Authorized Payment, ROGERS PAC BPY/FAC   132.35
+
+The AI will figure out the dates, amounts, and merchants automatically."></textarea>
+              <div class="paste-actions">
+                <button class="btn-outline" onclick="document.getElementById('pasteArea').value=''">Clear</button>
+                <button class="btn-primary" onclick="processPastedText(document.getElementById('pasteArea').value, document.getElementById('pasteSource').value)">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  Extract Transactions
+                </button>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div class="upload-sidebar-panel">
           <div class="card">
             <div class="card-header"><h3 class="card-title">How it works</h3></div>
             <ol class="how-list">
-              <li><span class="step-num">1</span><div><strong>Upload</strong> your bank or credit card statement — CSV, PDF, or Excel</div></li>
+              <li><span class="step-num">1</span><div><strong>Upload or paste</strong> your bank statement — PDF, CSV, or copied text</div></li>
               <li><span class="step-num">2</span><div><strong>AI reads</strong> every transaction and suggests a category + split based on your rules</div></li>
               <li><span class="step-num">3</span><div><strong>You review</strong> once — approve, tweak categories, adjust splits</div></li>
               <li><span class="step-num">4</span><div><strong>Settlement auto-calculates</strong> and rolls into your monthly summary</div></li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">BMO tip</h3></div>
+            <ol class="how-list">
+              <li><span class="step-num">1</span><div>Open your BMO PDF statement</div></li>
+              <li><span class="step-num">2</span><div>Press <strong>Cmd+A</strong> to select all</div></li>
+              <li><span class="step-num">3</span><div>Press <strong>Cmd+C</strong> to copy</div></li>
+              <li><span class="step-num">4</span><div>Click <strong>Paste Text</strong> tab above → paste → Extract</div></li>
             </ol>
           </div>
 
