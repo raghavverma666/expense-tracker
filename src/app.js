@@ -484,6 +484,17 @@ function addSuggestedRule(i, rule) {
   document.querySelectorAll('.suggestion-item')[i].style.opacity = '0.4';
 }
 
+// ─── UPLOAD METHOD SWITCHER ──────────────────────────────────────────────────
+
+function switchMethod(name, btn) {
+  document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('methodFile').style.display = name === 'file' ? 'block' : 'none';
+  document.getElementById('methodPaste').style.display = name === 'paste' ? 'block' : 'none';
+  document.getElementById('processingCard').style.display = 'none';
+  document.getElementById('uploadedFilesCard').style.display = 'none';
+}
+
 // ─── DROPZONE DRAG EVENTS ─────────────────────────────────────────────────────
 
 const dz = document.getElementById('dropzone');
